@@ -9,10 +9,13 @@ public class Assessment {
     static User user;
     static String menu;
     static UserDao userDao; 
+    static UserDao userConn;
+    static Scanner sc;
     
     public static void main(String[] args) {        
-        UserDao userConn = new UserDao();
-        userConn.openConnection();
+        userConn = new UserDao();
+        sc = new Scanner(System.in);
+       //userConn.openConnection();
         makeMenu();
     }
     
@@ -23,9 +26,8 @@ public class Assessment {
         System.out.println(menu);
         login();
     }
-
+    
     private static void login() {
-        Scanner sc = new Scanner(System.in);
         int op = sc.nextInt();
         switch(op){
             case 1:
@@ -93,6 +95,7 @@ public class Assessment {
 
       private static void mainOption(User user) {
          //limpar tela
+         clearConsole();
          //gerar menu
         String mainMenu = ("[1] Consultar dados de cliente\n"
                 + "[2] Consultar canais no plano\n"
@@ -107,13 +110,13 @@ public class Assessment {
                 consultarDados(user);
                 break;
             case 2:
-                consultarCanais(user.getPlano());
+                //consultarCanais(user.getPlano());
                 break;
             case 3:
-                consultarProgramacao();
+              //  consultarProgramacao();
                 break;
             case 4: 
-                adquirirCanal();
+              //  adquirirCanal();
                 break;
             case 5:
                 System.exit(0);
@@ -128,10 +131,10 @@ public class Assessment {
         //limpar tela
         clearConsole();
         System.out.println("Insira seu ID:");
-        Scanner id = new Scanner(System.in);
-        int verifica = id.nextInt();
+        int userID = sc.nextInt();
+        
         //pegar id;  
-        user = userDao.find(verifica);
+        user = userDao.find(userID);
         if(user != null){
             mainOption(user);
         }else{

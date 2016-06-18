@@ -32,6 +32,7 @@ public class UserDao extends AbstractDao<User>{
                 ps.setBoolean(2, user.isTitular());
             } catch (SQLException ex) {
                 Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("User save : SQLException:" + ex.getMessage());
                 ex.printStackTrace();
             }
             super.closeConnection();
@@ -41,7 +42,7 @@ public class UserDao extends AbstractDao<User>{
     }
 
     @Override
-    public User update(User t) {
+    public User update(User user) {
        return null;
     }
 
@@ -68,13 +69,11 @@ public class UserDao extends AbstractDao<User>{
             user.setId(rs.getInt("id"));
         } catch (SQLException ex) {
            ex.printStackTrace();
+          System.out.println("User find: SQLException:" + ex.getMessage());
+           
         }
         closeConnection();
         return user;
     }
-
-    public User find(Scanner id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+   
 }

@@ -8,8 +8,8 @@ package assessment.Model;
 import java.util.List;
 
 public class Plano {
-    private String name;
     private int id;
+    private String name;
     private List<Canal> Canais;
 
     public List<Canal> getCanais() {

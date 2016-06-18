@@ -11,7 +11,7 @@ public class Canal {
     public Canal() {
     }
 
-    public Canal(String tipo, int numeroCanal, String nomeCanal, Tipo tipo) {
+    public Canal(String tipo, int numeroCanal, String nomeCanal) {
         this.tipo = tipo;
         this.numeroCanal = numeroCanal;
         this.nomeCanal = nomeCanal;
@@ -41,12 +41,5 @@ public class Canal {
     public void setNomeCanal(String nomeCanal) {
         this.nomeCanal = nomeCanal;
     }
-
-    public Tipo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
-    }
+  
 }

@@ -1,3 +1,5 @@
+package assessment.Model;
+
 public class Tipo {
 
     private String name;
