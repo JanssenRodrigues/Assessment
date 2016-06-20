@@ -5,6 +5,7 @@
  */
 package assessment.dao;
 
+import assessment.Model.Plano;
 import assessment.Model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,11 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserDao extends AbstractDao<User>{
-
-    @Override
-    public boolean openConnection() {
-        return super.openConnection(); //To change body of generated methods, choose Tools | Templates.
-    }
     
     @Override
     public User save(User user) {
@@ -27,7 +23,7 @@ public class UserDao extends AbstractDao<User>{
         if(super.openConnection()){
             PreparedStatement ps;
             try {
-                ps = conn.prepareStatement("INSERT INTO user (plano, isTitular) values (?, ?);");            
+                ps = conn.prepareStatement("INSERT INTO user (plano, titular) values (?, ?);");            
                 ps.setInt(1, user.getPlano().getId());
                 ps.setBoolean(2, user.isTitular());
             } catch (SQLException ex) {
@@ -58,18 +54,26 @@ public class UserDao extends AbstractDao<User>{
 
     @Override
     public User find(int id) {
-        openConnection();
-        User user = new User();
+        User user = null;
+        openConnection();        
         PreparedStatement ps;
         try {
-            ps = conn.prepareStatement("select id from sistema.user where id = (?)");
+            ps = conn.prepareStatement("SELECT id FROM sistema.user where id = (?)");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            ps.execute();
-            user.setId(rs.getInt("id"));
-        } catch (SQLException ex) {
+            if(rs.next()){
+                user = new User();
+                user.setId(rs.getInt("id"));
+                Plano plano;
+                //user.setPlano(rs.get("plano"));
+            }else{
+                System.out.println("usuario nao identificado");
+            }
+            //System.out.println(rs.getInt("id"));
+            //ps.execute();
+        } catch (Exception ex) {
            ex.printStackTrace();
-          System.out.println("User find: SQLException:" + ex.getMessage());
+           System.out.println("User find: SQLException:" + ex.getMessage());
            
         }
         closeConnection();

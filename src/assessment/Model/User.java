@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package assessment.Model;
 
-/**
- *
- * @author WIBSA-PC144
- */
 public class User {
     public int id;
     public Plano plano;
-    private boolean Titular;
+    private boolean titular;
+    
 
     public int getId() {
         return id;
@@ -31,15 +23,10 @@ public class User {
     }
 
     public boolean isTitular() {
-        return Titular;
+        return titular;
     }
 
-    public void setTitular(boolean isTitular) {
-        this.Titular = isTitular;
-    }
-
-    public boolean plano(String canal_Esporte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-   
+    public void setTitular(boolean titular) {
+        this.titular = titular;
+    }   
 }

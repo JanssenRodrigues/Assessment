@@ -5,19 +5,30 @@
  */
 package assessment.Model;
 
+import java.sql.Array;
 import java.util.List;
 
 public class Plano {
-    private int id;
-    private String name;
-    private List<Canal> Canais;
+    public int id;
+    public List<Canal> canais;
+    public Array[] canais2;
+
+    public Array[] getCanais2() {
+        return canais2;
+    }
+
+    public void setCanais2(Array[] canais2) {
+        this.canais2 = canais2;
+    }
+
+    public String name;
 
     public List<Canal> getCanais() {
-        return Canais;
+        return canais;
     }
 
     public void setCanais(List<Canal> Canais) {
-        this.Canais = Canais;
+        this.canais = Canais;
     }
 
     public String getName() {

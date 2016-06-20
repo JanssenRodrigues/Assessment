@@ -22,7 +22,6 @@ public abstract class AbstractDao<T> {
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Falhou");
-            System.exit(0);
             return false;
         }
         return true;
