@@ -1,10 +1,11 @@
 package assessment.Model;
 
+import java.sql.Array;
+
 public class User {
     public int id;
     public Plano plano;
-    private boolean titular;
-    
+    public boolean titular;   
 
     public int getId() {
         return id;

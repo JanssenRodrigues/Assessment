@@ -5,19 +5,24 @@
  */
 package assessment.Model;
 
-import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Plano {
     public int id;
     public List<Canal> canais;
-    public Array[] canais2;
+    public ArrayList[] canais2;
 
-    public Array[] getCanais2() {
+    @Override
+    public String toString() {
+        return "Plano{" + "canais=" + canais + ", canais2=" + canais2 + '}';
+    }
+
+    public ArrayList[] getCanais2() {
         return canais2;
     }
 
-    public void setCanais2(Array[] canais2) {
+    public void setCanais2(ArrayList[] canais2) {
         this.canais2 = canais2;
     }
 

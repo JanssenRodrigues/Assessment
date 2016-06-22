@@ -4,11 +4,12 @@ import assessment.Model.Plano;
 import assessment.Model.User;
 import static assessment.dao.AbstractDao.conn;
 import assessment.dao.UserDao;
+import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,12 +29,10 @@ public class Assessment {
     
     public static void makeMenu(){
         menu = ("[1] Logar\n" +
-                "[2] Cadastrar\n" +
-                "[3] Sair.");
+                "[2] Sair.");
         System.out.println(menu);
         login();
-    }
-    
+    }    
     private static void login() {
         int op = sc.nextInt();
         switch(op){
@@ -41,16 +40,28 @@ public class Assessment {
                 logar();
                 break;
             case 2:
-                cadastrar();
+                System.out.println("Saindo...");
+                System.exit(0);
                 break;
-            case 3:
             default:
                 System.out.println("Opção inválida.");
-                System.exit(0);
         }    
     }
-    
-     
+     private static void logar(){
+        System.out.println("Insira seu ID:");
+        int userID = sc.nextInt();
+        //System.out.println(userID);
+        //pegar id; 
+        user = userConn.find(userID);
+        if(user != null){
+            mainOption(user);
+        }else{
+            System.out.println("Este ID ainda não foi cadastrado.");
+            logar();
+        }
+        //abre menu mainOption();
+        
+    }
     private static void consultarDados() {
        userConn.openConnection();
        PreparedStatement ps;
@@ -79,8 +90,61 @@ public class Assessment {
             Logger.getLogger(Assessment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-/*
-    private static void adquirirCanal(boolean titular) {
+    
+    private static void consultarCanais() {
+        userConn.openConnection();
+        PreparedStatement ps,ps2;
+        ResultSet rs;
+        try {
+            ps = conn.prepareStatement("SELECT * FROM user where id = (?)");
+            ps.setInt(1, user.getId());
+            rs = ps.executeQuery();                
+            if(rs.next()){
+                user = new User();
+                plano = new Plano();
+                ArrayList listCanais = new ArrayList();
+                user.setId(rs.getInt("id"));
+                plano.setId(rs.getInt("id"));
+                user.setPlano(plano);                
+                
+                ps2 = conn.prepareStatement("SELECT * FROM plano where id = (?)");
+                ps2.setInt(1, user.plano.getId());
+                ResultSet rs2 = ps2.executeQuery();
+                rs2.next();
+                listCanais.add(rs2.getString("canais"));
+                System.out.println("Seu plano contem os seguintes canais: "+listCanais);
+                userConn.closeConnection();
+            }else{
+                System.out.println("Error");
+            }  
+        } catch (SQLException ex) {
+            Logger.getLogger(Assessment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private static void adquirirCanal() {
+        userConn.openConnection();
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            ps = conn.prepareStatement("SELECT * FROM canal where id > 0");
+            rs = ps.executeQuery();
+            ArrayList todosCanais = new ArrayList();
+            while(rs.next()){
+                todosCanais.add(rs.getString("nome"));
+            }
+            System.out.println("Selecione um dos seguintes canais disponíveis para a compra: ");
+            for(int i = 0; i < todosCanais.size(); i++){
+                System.out.println("["+i+"] "+todosCanais.get(i));
+            }
+            int opcao = sc.nextInt();
+            user.plano.canais.add((Canal) todosCanais.get(opcao));
+            System.out.println("Seu plano possui os seguintes canais: " /*+ user.plano.canais*/);
+            
+        } catch (Exception e) {
+        }
+    }
+
+   /* private static void adquirirCanal(boolean titular) {
         if(titular){
             String canaisDisponiveis = ("[1] Canal Esporte\n"
                     + "[2] Canal Filme\n"
@@ -120,43 +184,9 @@ public class Assessment {
         }
     }*/
 
-    @SuppressWarnings("empty-statement")
-    private static void consultarCanais() {
-        userConn.openConnection();
-        PreparedStatement ps,ps2;
-        ResultSet rs;
-        try {
-            ps = conn.prepareStatement("SELECT * FROM user where id = (?)");
-            ps.setInt(1, user.getId());
-            rs = ps.executeQuery();                
-            if(rs.next()){
-                user = new User();
-                plano = new Plano();
-                
-                System.out.println("chegou no if");
-                user.setId(rs.getInt("id"));
-                plano.setId(rs.getInt("id"));
-                user.setPlano(plano);                
-                
-                ps2 = conn.prepareStatement("SELECT * FROM plano where id = (?)");
-                ps2.setInt(1, user.plano.getId());
-                ResultSet rs2 = ps2.executeQuery();
-                rs2.next();
-                
-                System.out.println("aeee");
-                
-                System.out.println(plano.getCanais());
-            }else{
-                System.out.println("falo");
-            }  
-        } catch (SQLException ex) {
-            Logger.getLogger(Assessment.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 
-      private static void mainOption(User user) {
-         //limpar tela
-         clearConsole();
+    private static void mainOption(User user) {
          //gerar menu
         String mainMenu = ("[1] Consultar dados de cliente\n"
                 + "[2] Consultar canais no plano\n"
@@ -176,7 +206,7 @@ public class Assessment {
               //  consultarProgramacao();
                 break;
             case 4: 
-              //  adquirirCanal();
+                adquirirCanal();
                 break;
             case 5:
                 System.exit(0);
@@ -187,42 +217,9 @@ public class Assessment {
         }
     }
 
-    private static void logar(){
-        //limpar tela
-        clearConsole();
-        System.out.println("Insira seu ID:");
-        int userID = sc.nextInt();
-        //System.out.println(userID);
-        //pegar id; 
-        user = userConn.find(userID);
-        if(user != null){
-            mainOption(user);
-        }else{
-            System.out.println("Este ID ainda não foi cadastrado.");
-            logar();
-        }
-        //abre menu mainOption();
-        
-    }
-    
-    public final static void clearConsole(){
-        try{
-            final String os = System.getProperty("os.name");
-
-            if (os.contains("Windows"))
-            {
-                Runtime.getRuntime().exec("cls");
-            }
-            else
-            {
-                Runtime.getRuntime().exec("clear");
-            }
-        }catch (final Exception e){
-             //  Handle any exceptions.
-        }
-    }
-
-    private static void cadastrar() {
+    private static String toSring(Object get) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
 }

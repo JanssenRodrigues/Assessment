@@ -3,8 +3,10 @@ package assessment.Model;
 import java.util.List;
 
 public class Canal {
+    private String nome;
     private String tipo;
     private int id;
+    //private ArrayList<String> 
 
     public int getId() {
         return id;
