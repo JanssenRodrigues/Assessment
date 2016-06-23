@@ -58,12 +58,13 @@ public class UserDao extends AbstractDao<User>{
         openConnection();        
         PreparedStatement ps;
         try {
-            ps = conn.prepareStatement("SELECT id FROM sistema.user where id = (?)");
+            ps = conn.prepareStatement("SELECT * FROM sistema.user where id = (?)");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 user = new User();
                 user.setId(rs.getInt("id"));
+                user.setTitular(rs.getBoolean("titular"));
                 Plano plano;
                 //user.setPlano(rs.get("plano"));
             }else{

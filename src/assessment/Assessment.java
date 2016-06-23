@@ -1,15 +1,12 @@
 package assessment;
-import assessment.Model.Canal;
 import assessment.Model.Plano;
 import assessment.Model.User;
 import static assessment.dao.AbstractDao.conn;
 import assessment.dao.UserDao;
-import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +16,7 @@ public class Assessment {
     static Plano plano = null;
     static String menu;
     static UserDao userConn;
-    static Scanner sc;
+    static Scanner sc;    
     
     public static void main(String[] args) {        
         userConn = new UserDao();
@@ -50,7 +47,6 @@ public class Assessment {
      private static void logar(){
         System.out.println("Insira seu ID:");
         int userID = sc.nextInt();
-        //System.out.println(userID);
         //pegar id; 
         user = userConn.find(userID);
         if(user != null){
@@ -58,9 +54,7 @@ public class Assessment {
         }else{
             System.out.println("Este ID ainda não foi cadastrado.");
             logar();
-        }
-        //abre menu mainOption();
-        
+        }        
     }
     private static void consultarDados() {
        userConn.openConnection();
@@ -125,22 +119,27 @@ public class Assessment {
         userConn.openConnection();
         PreparedStatement ps;
         ResultSet rs;
-        try {
-            ps = conn.prepareStatement("SELECT * FROM canal where id > 0");
-            rs = ps.executeQuery();
-            ArrayList todosCanais = new ArrayList();
-            while(rs.next()){
-                todosCanais.add(rs.getString("nome"));
+        if(user.titular){
+            try {
+                ps = conn.prepareStatement("SELECT * FROM canal where id > 0");
+                rs = ps.executeQuery();
+                ArrayList<String> todosCanais = new ArrayList<String>();
+                while(rs.next()){
+                    todosCanais.add(rs.getString("nome"));
+                }
+                System.out.println("Selecione um dos seguintes canais disponíveis para a compra: ");
+                for(int i = 0; i < todosCanais.size(); i++){
+                    System.out.println("["+i+"] "+todosCanais.get(i));
+                }
+                int opcao = sc.nextInt();
+                String canalEscolhido = todosCanais.get(opcao);
+                user.plano.canais2.add(canalEscolhido);
+                System.out.println("Seu plano possui os seguintes canais: " + user.plano.getCanais2());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            System.out.println("Selecione um dos seguintes canais disponíveis para a compra: ");
-            for(int i = 0; i < todosCanais.size(); i++){
-                System.out.println("["+i+"] "+todosCanais.get(i));
-            }
-            int opcao = sc.nextInt();
-            user.plano.canais.add((Canal) todosCanais.get(opcao));
-            System.out.println("Seu plano possui os seguintes canais: " /*+ user.plano.canais*/);
-            
-        } catch (Exception e) {
+        } else {
+            System.out.println("Apenas titulares podem adquirir novos canais.");
         }
     }
 

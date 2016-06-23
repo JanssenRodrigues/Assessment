@@ -10,30 +10,16 @@ import java.util.List;
 
 public class Plano {
     public int id;
-    public List<Canal> canais;
-    public ArrayList[] canais2;
+     public String name;
+    //public List<Canal> canais = new List<Canal>() {};
+    public ArrayList<String> canais2 = new ArrayList<String>();
 
-    @Override
-    public String toString() {
-        return "Plano{" + "canais=" + canais + ", canais2=" + canais2 + '}';
-    }
-
-    public ArrayList[] getCanais2() {
+    public ArrayList<String> getCanais2() {
         return canais2;
     }
 
-    public void setCanais2(ArrayList[] canais2) {
+    public void setCanais2(ArrayList<String> canais2) {
         this.canais2 = canais2;
-    }
-
-    public String name;
-
-    public List<Canal> getCanais() {
-        return canais;
-    }
-
-    public void setCanais(List<Canal> Canais) {
-        this.canais = Canais;
     }
 
     public String getName() {
