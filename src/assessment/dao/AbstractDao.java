@@ -2,8 +2,6 @@ package assessment.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,7 +19,7 @@ public abstract class AbstractDao<T> {
             System.out.println("Conexão realizada com sucesso");
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println("Falhou");
+            System.err.println("Falhou");
             return false;
         }
         return true;

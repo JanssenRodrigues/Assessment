@@ -6,8 +6,21 @@ public class Canal {
     private String nome;
     private String tipo;
     private int id;
-    //private ArrayList<String> 
+    private int numeroCanal;
+    private String nomeCanal;
+    private List<Plano> planos;
 
+    public Canal() {
+    }
+    
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     public int getId() {
         return id;
     }
@@ -23,13 +36,7 @@ public class Canal {
     public void setPlanos(List<Plano> planos) {
         this.planos = planos;
     }
-    private int numeroCanal;
-    private String nomeCanal;
-    private List<Plano> planos;
-
-    public Canal() {
-    }
-
+    
     public Canal(String tipo, int numeroCanal, String nomeCanal) {
         this.tipo = tipo;
         this.numeroCanal = numeroCanal;

@@ -6,13 +6,11 @@
 package assessment.Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Plano {
-    public int id;
-     public String name;
-    //public List<Canal> canais = new List<Canal>() {};
-    public ArrayList<String> canais2 = new ArrayList<String>();
+    private int id;
+    private String name;
+    private ArrayList<String> canais2 = new ArrayList<String>();
 
     public ArrayList<String> getCanais2() {
         return canais2;

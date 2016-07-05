@@ -1,11 +1,36 @@
 package assessment.Model;
 
-import java.sql.Array;
+import assessment.Assessment;
+import java.sql.Date;
+import java.util.ArrayList;
 
-public class User {
-    public int id;
-    public Plano plano;
-    public boolean titular;   
+public class User extends Assessment{
+    private int id;
+    private String name;
+    private Plano plano;
+    private boolean titular;   
+    private Date nascimento;
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", name=" + name + ", plano=" + plano + ", titular=" + titular + ", nascimento=" + nascimento + '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(Date nascimento) {
+        this.nascimento = nascimento;
+    }
 
     public int getId() {
         return id;
